@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>Stok Handphone</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <div class="nav">
+    <a href="index.html" class="active">📦 Stok Barang</a>
+    <a href="penjualan.html">💰 Kasir Penjualan</a>
+    <a href="profit.html">📊 Laporan Profit</a>
+  </div>
+
+  <h1>📱 Manajemen Stok HP</h1>
+  <p class="sub">Tambah & kelola data barang masuk</p>
+
+  <div style="text-align: center; margin: 10px 0 30px;">
+    <a href="penjualan.html" style="text-decoration: none;">
+      <button style="font-size: 1.2rem; padding: 16px 48px; background: #0f172a; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: 700;">
+        💰 Buka Halaman Kasir Penjualan
+      </button>
+    </a>
+  </div>
+
+  <div class="card">
+    <h2>➕ Tambah Barang Masuk</h2>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Brand</label>
+        <input type="text" id="brandInput" placeholder="Ketik atau pilih brand" list="brandList" autocomplete="off">
+        <datalist id="brandList"></datalist>
+      </div>
+      <div class="form-group">
+        <label>Model</label>
+        <input type="text" id="modelInput" placeholder="Ketik atau pilih model" list="modelList" autocomplete="off">
+        <datalist id="modelList"></datalist>
+      </div>
+      <div class="form-group">
+        <label>Warna</label>
+        <input type="text" id="warnaInput" placeholder="Ketik atau pilih warna" list="warnaList" autocomplete="off">
+        <datalist id="warnaList">
+          <option>Black</option><option>White</option><option>Blue</option>
+          <option>Silver</option><option>Gold</option><option>Green</option>
+          <option>Pink</option><option>Red</option><option>Grey</option>
+        </datalist>
+      </div>
+      <div class="form-group">
+        <label>Toko Pembelian</label>
+        <input type="text" id="toko" placeholder="Nama toko / supplier" required>
+      </div>
+      <div class="form-group">
+        <label>IMEI</label>
+        <input type="text" id="imei" placeholder="15 digit IMEI" required>
+      </div>
+      <div class="form-group">
+        <label>RAM (GB)</label>
+        <input type="number" id="ram" placeholder="misal 8" min="1" required>
+      </div>
+      <div class="form-group">
+        <label>Storage (GB)</label>
+        <input type="number" id="storage" placeholder="misal 256" min="1" required>
+      </div>
+      <div class="form-group">
+        <label>Harga Modal (Rp)</label>
+        <input type="number" id="hargaModal" placeholder="12000000" required>
+      </div>
+      <div class="form-group">
+        <label>Harga Jual (Rp)</label>
+        <input type="number" id="hargaJual" placeholder="13500000" required>
+      </div>
+      <div class="form-group">
+        <label>Tanggal Masuk</label>
+        <input type="date" id="tanggalMasuk" required>
+      </div>
+      <div class="form-group" style="align-self: end;">
+        <button class="btn btn-green" id="btnTambah">✅ Simpan Barang</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📋 Daftar Stok Handphone</h2>
+    <div class="filter-bar">
+      <input type="text" id="searchInput" placeholder="🔍 Cari IMEI / model...">
+      <input type="text" id="filterBrand" placeholder="Filter brand...">
+      <select id="filterStatus">
+        <option value="">Semua Status</option>
+        <option value="In Stock">In Stock</option>
+        <option value="Sold">Sold</option>
+      </select>
+      <button class="btn btn-outline btn-sm" id="resetFilter">↺ Reset</button>
+    </div>
+    <div class="table-wrapper">
+      <table id="stockTable">
+        <thead>
+         <tr>
+            <th>Brand</th><th>Model</th><th>Warna</th><th>Toko</th>
+            <th>IMEI</th><th>RAM/Storage</th><th>Modal</th><th>Jual</th>
+            <th>Profit</th><th>Tgl Masuk</th><th>Status</th><th>Tgl Keluar</th>
+            <th>Aksi</th>
+         </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modalEdit">
+  <div class="modal-content">
+    <h3>✏️ Edit Barang</h3>
+    <div class="form-grid" style="margin-top:14px;">
+      <div class="form-group"><label>Brand</label><input type="text" id="editBrand" list="brandListEdit"><datalist id="brandListEdit"></datalist></div>
+      <div class="form-group"><label>Model</label><input type="text" id="editModel" list="modelListEdit"><datalist id="modelListEdit"></datalist></div>
+      <div class="form-group"><label>Warna</label><input type="text" id="editWarna" list="warnaListEdit"><datalist id="warnaListEdit">
+        <option>Black</option><option>White</option><option>Blue</option>
+        <option>Silver</option><option>Gold</option><option>Green</option>
+        <option>Pink</option><option>Red</option><option>Grey</option>
+      </datalist></div>
+      <div class="form-group"><label>Toko</label><input type="text" id="editToko"></div>
+      <div class="form-group"><label>IMEI</label><input type="text" id="editImei"></div>
+      <div class="form-group"><label>RAM</label><input type="number" id="editRam"></div>
+      <div class="form-group"><label>Storage</label><input type="number" id="editStorage"></div>
+      <div class="form-group"><label>Modal</label><input type="number" id="editModal"></div>
+      <div class="form-group"><label>Jual</label><input type="number" id="editJual"></div>
+      <div class="form-group"><label>Tgl Masuk</label><input type="date" id="editTglMasuk"></div>
+    </div>
+    <div class="flex-row">
+      <button class="btn btn-green" id="simpanEdit">💾 Simpan Edit</button>
+      <button class="btn btn-outline" id="batalEdit">Batal</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="api.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

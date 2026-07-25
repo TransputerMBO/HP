@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>Laporan Profit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <div class="nav">
+    <a href="index.html">📦 Stok Barang</a>
+    <a href="penjualan.html">💰 Kasir Penjualan</a>
+    <a href="profit.html" class="active">📊 Laporan Profit</a>
+  </div>
+
+  <h1>📊 Laporan Profit</h1>
+  <p class="sub">Ringkasan keuntungan berdasarkan periode</p>
+
+  <div class="card">
+    <h2>📅 Pilih Periode</h2>
+    <div class="filter-bar" style="margin-bottom:16px;">
+      <select id="filterPeriode">
+        <option value="hari">Hari ini</option>
+        <option value="bulan">Bulan ini</option>
+        <option value="tahun">Tahun ini</option>
+        <option value="custom">Kustom</option>
+      </select>
+      <div id="customRange" style="display:none; gap:8px; align-items:center;">
+        <input type="date" id="tglAwal">
+        <span>s/d</span>
+        <input type="date" id="tglAkhir">
+      </div>
+      <button class="btn btn-outline btn-sm" id="terapkanFilter">🔍 Tampilkan</button>
+    </div>
+
+    <div style="background:white; padding:18px; border-radius:14px; border:1px solid #e2e8f0;">
+      <div style="display:flex; gap:30px; flex-wrap:wrap;">
+        <div>
+          <div style="font-size:0.85rem; color:#475569;">Total Penjualan</div>
+          <div style="font-size:1.5rem; font-weight:700;" id="totalPenjualan">Rp 0</div>
+        </div>
+        <div>
+          <div style="font-size:0.85rem; color:#475569;">Total Profit</div>
+          <div style="font-size:1.5rem; font-weight:700; color:#059669;" id="totalProfit">Rp 0</div>
+        </div>
+        <div>
+          <div style="font-size:0.85rem; color:#475569;">Jumlah Unit Terjual</div>
+          <div style="font-size:1.5rem; font-weight:700;" id="jumlahUnit">0</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📋 Detail Penjualan</h2>
+    <div class="table-wrapper">
+      <table id="tableDetail">
+        <thead>
+          <tr>
+            <th>Brand</th><th>Model</th><th>IMEI</th><th>Harga Jual</th>
+            <th>Profit</th><th>Tgl Keluar</th><th>Terjual oleh</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script src="api.js"></script>
+<script src="profit.js"></script>
+</body>
+</html>

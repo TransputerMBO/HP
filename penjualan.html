@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>Kasir Penjualan HP</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <div class="nav">
+    <a href="index.html">📦 Stok Barang</a>
+    <a href="penjualan.html" class="active">💰 Kasir Penjualan</a>
+    <a href="profit.html">📊 Laporan Profit</a>
+  </div>
+
+  <h1>💰 Kasir Penjualan</h1>
+  <p class="sub">Pilih barang dari stok, catat penjualan, dan lihat profit</p>
+
+  <div class="card">
+    <h2>🧾 Form Penjualan</h2>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Pilih Barang (In Stock)</label>
+        <select id="selectBarang">
+          <option value="">-- Pilih barang --</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Tanggal Keluar</label>
+        <input type="date" id="tglKeluar">
+      </div>
+      <div class="form-group">
+        <label>Harga Jual Akhir (Rp)</label>
+        <input type="number" id="hargaJualFinal" placeholder="Kosongkan = pakai harga default">
+      </div>
+      <div class="form-group">
+        <label>Terjual oleh</label>
+        <input type="text" id="terjualOleh" placeholder="Nama penjual / kasir">
+      </div>
+    </div>
+
+    <div id="detailBarang" style="margin-top: 20px; background: white; padding: 16px; border-radius: 14px; border: 1px solid #e2e8f0; display: none;">
+      <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+        <div><strong>Brand:</strong> <span id="dBrand">-</span></div>
+        <div><strong>Model:</strong> <span id="dModel">-</span></div>
+        <div><strong>Warna:</strong> <span id="dWarna">-</span></div>
+        <div><strong>IMEI:</strong> <span id="dImei">-</span></div>
+        <div><strong>RAM/Storage:</strong> <span id="dSpek">-</span></div>
+        <div><strong>Harga Modal:</strong> <span id="dModal">-</span></div>
+        <div><strong>Harga Jual Default:</strong> <span id="dJual">-</span></div>
+        <div style="font-size:1.1rem;"><strong>💰 Profit Estimasi:</strong> <span id="dProfit" style="color:#059669; font-weight:700;">-</span></div>
+      </div>
+    </div>
+
+    <div class="flex-row">
+      <button class="btn btn-green" id="prosesJual">✔ Proses Penjualan</button>
+      <button class="btn btn-outline" id="resetForm">🔄 Reset</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📋 Riwayat Penjualan</h2>
+    <div class="table-wrapper">
+      <table id="tableRiwayat">
+        <thead>
+          <tr>
+            <th>Brand</th><th>Model</th><th>IMEI</th><th>Harga Jual</th>
+            <th>Profit</th><th>Tgl Keluar</th><th>Terjual oleh</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="api.js"></script>
+<script src="penjualan.js"></script>
+</body>
+</html>
