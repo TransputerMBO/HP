@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stok Handphone</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -15,12 +15,12 @@
   </div>
 
   <h1>📱 Manajemen Stok HP</h1>
-  <p class="sub">Tambah & kelola data barang masuk</p>
+  <p class="sub">Tambah, kelola, dan import data barang masuk</p>
 
   <div style="text-align: center; margin: 10px 0 30px;">
     <a href="penjualan.html" style="text-decoration: none;">
       <button style="font-size: 1.2rem; padding: 16px 48px; background: #0f172a; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: 700;">
-        💰 Buka Halaman Kasir Penjualan
+        💰 Buka Kasir Penjualan
       </button>
     </a>
   </div>
@@ -30,17 +30,17 @@
     <div class="form-grid">
       <div class="form-group">
         <label>Brand</label>
-        <input type="text" id="brandInput" placeholder="Ketik atau pilih brand" list="brandList" autocomplete="off">
+        <input type="text" id="brandInput" placeholder="Ketik brand" list="brandList" autocomplete="off">
         <datalist id="brandList"></datalist>
       </div>
       <div class="form-group">
         <label>Model</label>
-        <input type="text" id="modelInput" placeholder="Ketik atau pilih model" list="modelList" autocomplete="off">
+        <input type="text" id="modelInput" placeholder="Ketik model" list="modelList" autocomplete="off">
         <datalist id="modelList"></datalist>
       </div>
       <div class="form-group">
         <label>Warna</label>
-        <input type="text" id="warnaInput" placeholder="Ketik atau pilih warna" list="warnaList" autocomplete="off">
+        <input type="text" id="warnaInput" placeholder="Ketik warna" list="warnaList" autocomplete="off">
         <datalist id="warnaList">
           <option>Black</option><option>White</option><option>Blue</option>
           <option>Silver</option><option>Gold</option><option>Green</option>
@@ -79,6 +79,16 @@
         <button class="btn btn-green" id="btnTambah">✅ Simpan Barang</button>
       </div>
     </div>
+
+    <!-- Bagian Upload Excel -->
+    <div style="margin-top: 20px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
+      <h3 style="margin-bottom: 12px;">📤 Upload Stok dari Excel</h3>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <input type="file" id="fileExcel" accept=".xlsx, .xls" style="padding: 8px;">
+        <button class="btn btn-outline" id="btnUpload">📥 Import Excel</button>
+      </div>
+      <small style="color: #64748b;">Format: brand, model, warna, toko, imei, ram, storage, harga_modal, harga_jual, tanggal_masuk (YYYY-MM-DD)</small>
+    </div>
   </div>
 
   <div class="card">
@@ -109,17 +119,14 @@
   </div>
 </div>
 
+<!-- Modal Edit Barang -->
 <div class="modal" id="modalEdit">
   <div class="modal-content">
     <h3>✏️ Edit Barang</h3>
     <div class="form-grid" style="margin-top:14px;">
-      <div class="form-group"><label>Brand</label><input type="text" id="editBrand" list="brandListEdit"><datalist id="brandListEdit"></datalist></div>
-      <div class="form-group"><label>Model</label><input type="text" id="editModel" list="modelListEdit"><datalist id="modelListEdit"></datalist></div>
-      <div class="form-group"><label>Warna</label><input type="text" id="editWarna" list="warnaListEdit"><datalist id="warnaListEdit">
-        <option>Black</option><option>White</option><option>Blue</option>
-        <option>Silver</option><option>Gold</option><option>Green</option>
-        <option>Pink</option><option>Red</option><option>Grey</option>
-      </datalist></div>
+      <div class="form-group"><label>Brand</label><input type="text" id="editBrand"></div>
+      <div class="form-group"><label>Model</label><input type="text" id="editModel"></div>
+      <div class="form-group"><label>Warna</label><input type="text" id="editWarna"></div>
       <div class="form-group"><label>Toko</label><input type="text" id="editToko"></div>
       <div class="form-group"><label>IMEI</label><input type="text" id="editImei"></div>
       <div class="form-group"><label>RAM</label><input type="number" id="editRam"></div>
@@ -136,7 +143,9 @@
 </div>
 
 <div class="toast" id="toast"></div>
-<script src="api.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
