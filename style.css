@@ -230,3 +230,79 @@ td {
   .container { padding: 16px; }
   .form-grid { grid-template-columns: 1fr; }
 }
+/* Style untuk baris grup model */
+.group-header {
+  background: #f8fafc;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  user-select: none;
+  border-bottom: 2px solid #e2e8f0;
+}
+.group-header:hover {
+  background: #eef2ff;
+}
+
+/* Badge untuk nama model */
+.group-header a.model-link {
+  display: inline-block;
+  background: #eef2ff;
+  color: #4338ca !important;
+  text-decoration: none !important;
+  font-weight: 600;
+  padding: 4px 14px;
+  border-radius: 20px;
+  border: 1px solid #c7d2fe;
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
+}
+.group-header a.model-link:hover {
+  background: #4338ca;
+  color: #ffffff !important;
+  border-color: #4338ca;
+}
+
+/* Info varian: badge jumlah + panah */
+.variant-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #64748b;
+  font-size: 0.85rem;
+}
+.variant-badge {
+  background: #e2e8f0;
+  color: #475569;
+  padding: 3px 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+.arrow-icon {
+  transition: transform 0.3s ease;
+  font-size: 0.7rem;
+  color: #94a3b8;
+}
+.group-header.open .arrow-icon {
+  transform: rotate(90deg);
+}
+
+/* Baris detail varian */
+.detail-row {
+  transition: all 0.3s ease;
+}
+.detail-row td {
+  padding: 10px 12px;
+  color: #334155;
+  font-size: 0.85rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+.detail-row:nth-child(even) td {
+  background: #fcfcfd;
+}
+.detail-row:nth-child(odd) td {
+  background: #ffffff;
+}
+.detail-row:hover td {
+  background: #f0f4ff;
+}
