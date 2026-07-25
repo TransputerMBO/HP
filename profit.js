@@ -1,4 +1,8 @@
 (function() {
+  const SUPABASE_URL = 'https://ydmvywtdnhuwwxassajb.supabase.co';   // GANTI
+  const SUPABASE_ANON_KEY = 'sb_publishable_64_nQNMzcnEJ_yF_w72R3g_pGkOYml-';                 // GANTI
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
   let items = [];
 
   const filterPeriode = document.getElementById('filterPeriode');
@@ -64,7 +68,7 @@
 
     tbodyDetail.innerHTML = '';
     if (!terjual.length) {
-      tbodyDetail.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:28px;">Tidak ada data.</td></tr>';
+      tbodyDetail.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:28px;">Tidak ada data penjualan pada periode ini.</td></tr>';
       return;
     }
 
