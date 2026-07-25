@@ -21,11 +21,10 @@
     <h2>🧾 Form Penjualan</h2>
     <div class="form-grid">
       <div class="form-group">
-        <label>Pilih Barang (In Stock)</label>
-        <select id="selectBarang">
-          <option value="">-- Pilih barang --</option>
-        </select>
-      </div>
+  <label>Cari Barang</label>
+  <input type="text" id="searchBarang" list="barangList" placeholder="Ketik untuk mencari..." autocomplete="off">
+  <datalist id="barangList"></datalist>
+</div>
       <div class="form-group">
         <label>Tanggal Keluar</label>
         <input type="date" id="tglKeluar">
@@ -76,7 +75,7 @@
 </div>
 
 <div class="toast" id="toast"></div>
-<script src="api.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="penjualan.js"></script>
 </body>
 </html>
