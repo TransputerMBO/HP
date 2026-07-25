@@ -1,244 +1,308 @@
-(function() {
-  const SUPABASE_URL = 'https://ydmvywtdnhuwwxassajb.supabase.co';   // GANTI
-  const SUPABASE_ANON_KEY = 'sb_publishable_64_nQNMzcnEJ_yF_w72R3g_pGkOYml-';                 // GANTI
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+}
+body {
+  background: #f0f4f8;
+  padding: 20px;
+  color: #1a2b3c;
+}
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 20px 35px rgba(0,0,0,0.05);
+  padding: 28px 24px;
+}
+.nav {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 28px;
+  background: #f8fafc;
+  padding: 12px 20px;
+  border-radius: 18px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.nav a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #1e293b;
+  padding: 8px 20px;
+  border-radius: 30px;
+  background: transparent;
+  transition: 0.2s;
+}
+.nav a.active {
+  background: #0f172a;
+  color: white;
+}
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sub {
+  color: #475569;
+  margin-bottom: 30px;
+  font-size: 0.95rem;
+}
+.card {
+  background: #f8fafc;
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 32px;
+  border: 1px solid #e2e8f0;
+}
+.card h2 {
+  font-size: 1.3rem;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.form-group label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #334155;
+}
+.form-group input, .form-group select {
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  background: white;
+  transition: 0.2s;
+}
+.form-group input:focus, .form-group select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+}
+.btn {
+  background: #0f172a;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.9rem;
+}
+.btn:hover {
+  background: #1e293b;
+}
+.btn-green {
+  background: #059669;
+}
+.btn-green:hover {
+  background: #047857;
+}
+.btn-outline {
+  background: white;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+}
+.btn-outline:hover {
+  background: #f1f5f9;
+}
+.btn-sm {
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  border-radius: 10px;
+}
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+.filter-bar input, .filter-bar select {
+  padding: 8px 14px;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+}
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
+  font-size: 0.85rem;
+}
+th {
+  background: #f1f5f9;
+  font-weight: 700;
+  padding: 14px 12px;
+  text-align: left;
+  color: #0f172a;
+}
+td {
+  padding: 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  display: inline-block;
+}
+.badge-stock {
+  background: #d1fae5;
+  color: #065f46;
+}
+.badge-sold {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.profit-positif {
+  color: #059669;
+  font-weight: 700;
+}
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal.active {
+  display: flex;
+}
+.modal-content {
+  background: white;
+  padding: 28px;
+  border-radius: 24px;
+  width: 90%;
+  max-width: 500px;
+}
+.flex-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #0f172a;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-weight: 600;
+  opacity: 0;
+  transition: 0.3s;
+  z-index: 2000;
+}
+.toast.show {
+  opacity: 1;
+}
+@media (max-width: 600px) {
+  .container { padding: 16px; }
+  .form-grid { grid-template-columns: 1fr; }
+}
+/* Style untuk baris grup model */
+.group-header {
+  background: #f8fafc;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  user-select: none;
+  border-bottom: 2px solid #e2e8f0;
+}
+.group-header:hover {
+  background: #eef2ff;
+}
 
-  let items = [];
-  let currentEditId = null;
+/* Badge untuk nama model */
+.group-header a.model-link {
+  display: inline-block;
+  background: #eef2ff;
+  color: #4338ca !important;
+  text-decoration: none !important;
+  font-weight: 600;
+  padding: 4px 14px;
+  border-radius: 20px;
+  border: 1px solid #c7d2fe;
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
+}
+.group-header a.model-link:hover {
+  background: #4338ca;
+  color: #ffffff !important;
+  border-color: #4338ca;
+}
 
-  const brandInput = document.getElementById('brandInput');
-  const modelInput = document.getElementById('modelInput');
-  const warnaInput = document.getElementById('warnaInput');
-  const tokoInput = document.getElementById('toko');
-  const imeiInput = document.getElementById('imei');
-  const ramInput = document.getElementById('ram');
-  const storageInput = document.getElementById('storage');
-  const hargaModalInput = document.getElementById('hargaModal');
-  const hargaJualInput = document.getElementById('hargaJual');
-  const tanggalMasukInput = document.getElementById('tanggalMasuk');
-  const btnTambah = document.getElementById('btnTambah');
-  const tbody = document.querySelector('#stockTable tbody');
-  const searchInput = document.getElementById('searchInput');
-  const filterBrand = document.getElementById('filterBrand');
-  const filterStatus = document.getElementById('filterStatus');
-  const resetFilter = document.getElementById('resetFilter');
+/* Info varian: badge jumlah + panah */
+.variant-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #64748b;
+  font-size: 0.85rem;
+}
+.variant-badge {
+  background: #e2e8f0;
+  color: #475569;
+  padding: 3px 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+.arrow-icon {
+  transition: transform 0.3s ease;
+  font-size: 0.7rem;
+  color: #94a3b8;
+}
+.group-header.open .arrow-icon {
+  transform: rotate(90deg);
+}
 
-  const modalEdit = document.getElementById('modalEdit');
-  const editBrand = document.getElementById('editBrand');
-  const editModel = document.getElementById('editModel');
-  const editWarna = document.getElementById('editWarna');
-  const editToko = document.getElementById('editToko');
-  const editImei = document.getElementById('editImei');
-  const editRam = document.getElementById('editRam');
-  const editStorage = document.getElementById('editStorage');
-  const editModal = document.getElementById('editModal');
-  const editJual = document.getElementById('editJual');
-  const editTglMasuk = document.getElementById('editTglMasuk');
-  const simpanEdit = document.getElementById('simpanEdit');
-  const batalEdit = document.getElementById('batalEdit');
-  const toast = document.getElementById('toast');
-
-  const brandList = document.getElementById('brandList');
-  const modelList = document.getElementById('modelList');
-  const warnaList = document.getElementById('warnaList');
-
-  function formatRupiah(num) { return 'Rp ' + Number(num).toLocaleString('id-ID'); }
-  function showToast(msg) { toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2500); }
-
-  async function loadItems() {
-    const { data, error } = await supabase.from('stock_items').select('*').order('tanggal_masuk', { ascending: false });
-    if (error) { showToast('Error: ' + error.message); return; }
-    items = data;
-    renderTable();
-    updateDatalists();
-  }
-
-  function getUniqueValues(key) { return [...new Set(items.map(i => i[key]).filter(v => v))].sort((a,b) => a.localeCompare(b)); }
-
-  function updateDatalists() {
-    const fill = (dl, arr) => { dl.innerHTML = ''; arr.forEach(v => { const o = document.createElement('option'); o.value = v; dl.appendChild(o); }); };
-    fill(brandList, getUniqueValues('brand'));
-    fill(modelList, getUniqueValues('model'));
-    fill(warnaList, [...new Set([...getUniqueValues('warna'), 'Black','White','Blue','Silver','Gold','Green','Pink','Red','Grey'])].sort());
-  }
-
-  function excelDateToISO(serial) {
-    if (typeof serial === 'number') {
-      const utcDate = new Date((serial - 25569) * 86400 * 1000);
-      return `${utcDate.getFullYear()}-${String(utcDate.getMonth()+1).padStart(2,'0')}-${String(utcDate.getDate()).padStart(2,'0')}`;
-    } else if (typeof serial === 'string') {
-      if (/^\d{4}-\d{2}-\d{2}$/.test(serial)) return serial;
-      const parsed = new Date(serial);
-      if (!isNaN(parsed.getTime())) {
-        return `${parsed.getFullYear()}-${String(parsed.getMonth()+1).padStart(2,'0')}-${String(parsed.getDate()).padStart(2,'0')}`;
-      }
-    }
-    throw new Error('Format tanggal tidak dikenali: ' + serial);
-  }
-
-  // *** RENDER TABLE DENGAN PENGELOMPOKAN MODEL ***
-  function renderTable() {
-    const searchTerm = searchInput.value.toLowerCase();
-    const brandFilterText = filterBrand.value.trim().toLowerCase();
-    const statusFilter = filterStatus.value;
-
-    let filtered = items.filter(item => {
-      if (brandFilterText && !item.brand.toLowerCase().includes(brandFilterText)) return false;
-      if (statusFilter && item.status !== statusFilter) return false;
-      if (searchTerm && !(item.imei + ' ' + item.model + ' ' + item.brand).toLowerCase().includes(searchTerm)) return false;
-      return true;
-    });
-
-    const grouped = {};
-    filtered.forEach(item => {
-      if (!grouped[item.model]) grouped[item.model] = [];
-      grouped[item.model].push(item);
-    });
-
-    tbody.innerHTML = '';
-    if (Object.keys(grouped).length === 0) {
-      tbody.innerHTML = '<tr><td colspan="13" style="text-align:center;padding:28px;">Belum ada data.</td></tr>';
-      return;
-    }
-
-    for (const [model, itemsGroup] of Object.entries(grouped)) {
-      const inStockCount = itemsGroup.filter(i => i.status === 'In Stock').length;
-
-      const mainRow = document.createElement('tr');
-      mainRow.className = 'group-header';
-      mainRow.innerHTML = `
-        <td>${itemsGroup[0].brand}</td>
-        <td><a href="#" class="model-link" data-model="${model}">${model}</a></td>
-        <td colspan="11">
-          <span class="variant-info">
-            🟢 ${inStockCount} Tersedia
-            <span class="arrow-icon">▶</span>
-          </span>
-        </td>
-      `;
-      mainRow.style.cursor = 'pointer';
-      tbody.appendChild(mainRow);
-
-      itemsGroup.forEach(item => {
-        const detailRow = document.createElement('tr');
-        detailRow.className = 'detail-row';
-        detailRow.style.display = 'none';
-        detailRow.innerHTML = `
-          <td></td>
-          <td></td>
-          <td>${item.warna}</td>
-          <td>${item.toko}</td>
-          <td style="font-family:monospace; font-size:0.8rem;">${item.imei}</td>
-          <td>${item.ram}GB / ${item.storage}GB</td>
-          <td>${formatRupiah(item.harga_modal)}</td>
-          <td>${formatRupiah(item.harga_jual)}</td>
-          <td class="${(item.harga_jual - item.harga_modal) >= 0 ? 'profit-positif' : ''}">${formatRupiah(item.harga_jual - item.harga_modal)}</td>
-          <td>${item.tanggal_masuk}</td>
-          <td><span class="badge ${item.status==='In Stock' ? 'badge-stock' : 'badge-sold'}">${item.status}</span></td>
-          <td>${item.tanggal_keluar || '-'}</td>
-          <td>
-            <button class="btn btn-outline btn-sm edit-btn" data-id="${item.id}">✏️</button>
-            <button class="btn btn-outline btn-sm delete-btn" data-id="${item.id}" style="margin-left:4px;color:#b91c1c;">🗑️</button>
-          </td>
-        `;
-        tbody.appendChild(detailRow);
-      });
-
-      mainRow.addEventListener('click', function() {
-        this.classList.toggle('open');
-        let nextRow = this.nextElementSibling;
-        while (nextRow && nextRow.classList.contains('detail-row')) {
-          nextRow.style.display = nextRow.style.display === 'none' ? '' : 'none';
-          nextRow = nextRow.nextElementSibling;
-        }
-      });
-    }
-
-    document.querySelectorAll('.edit-btn').forEach(btn => btn.addEventListener('click', e => { e.stopPropagation(); openEditModal(Number(e.currentTarget.dataset.id)); }));
-    document.querySelectorAll('.delete-btn').forEach(btn => btn.addEventListener('click', async e => { e.stopPropagation(); const id = Number(e.currentTarget.dataset.id); if (confirm('Hapus?')) { const { error } = await supabase.from('stock_items').delete().eq('id', id); if (error) showToast('Error: ' + error.message); else { showToast('Dihapus'); loadItems(); } } }));
-  }
-
-  async function addItem() {
-    const brand = brandInput.value.trim(), model = modelInput.value.trim(), warna = warnaInput.value.trim(), toko = tokoInput.value.trim(), imei = imeiInput.value.trim();
-    const ram = parseInt(ramInput.value), storage = parseInt(storageInput.value), hargaModal = parseInt(hargaModalInput.value), hargaJual = parseInt(hargaJualInput.value);
-    const tanggalMasuk = tanggalMasukInput.value;
-    if (!brand || !model || !warna || !toko || !imei || isNaN(ram) || isNaN(storage) || isNaN(hargaModal) || isNaN(hargaJual) || !tanggalMasuk) { alert('Lengkapi semua field.'); return; }
-
-    const newItem = { id: Date.now(), brand, model, warna, toko, imei, ram, storage, harga_modal: hargaModal, harga_jual: hargaJual, tanggal_masuk: tanggalMasuk, status: 'In Stock', tanggal_keluar: null, actual_harga_jual: null, terjual_oleh: null };
-    const { error } = await supabase.from('stock_items').insert([newItem]);
-    if (error) { showToast('Gagal: ' + error.message); return; }
-    showToast('Barang masuk ditambahkan ✅');
-    brandInput.value = ''; modelInput.value = ''; warnaInput.value = ''; tokoInput.value = ''; imeiInput.value = ''; ramInput.value = ''; storageInput.value = ''; hargaModalInput.value = ''; hargaJualInput.value = '';
-    loadItems();
-  }
-
-  function openEditModal(id) {
-    const item = items.find(i => i.id === id);
-    if (!item) return;
-    currentEditId = id;
-    editBrand.value = item.brand; editModel.value = item.model; editWarna.value = item.warna; editToko.value = item.toko; editImei.value = item.imei; editRam.value = item.ram; editStorage.value = item.storage; editModal.value = item.harga_modal; editJual.value = item.status === 'Sold' && item.actual_harga_jual ? item.actual_harga_jual : item.harga_jual; editTglMasuk.value = item.tanggal_masuk;
-    modalEdit.classList.add('active');
-  }
-
-  simpanEdit.addEventListener('click', async () => {
-    if (!currentEditId) return;
-    const item = items.find(i => i.id === currentEditId);
-    if (!item) return;
-    const updatedItem = { brand: editBrand.value, model: editModel.value, warna: editWarna.value, toko: editToko.value, imei: editImei.value, ram: parseInt(editRam.value), storage: parseInt(editStorage.value), harga_modal: parseInt(editModal.value), tanggal_masuk: editTglMasuk.value, status: item.status, tanggal_keluar: item.tanggal_keluar, actual_harga_jual: item.actual_harga_jual, terjual_oleh: item.terjual_oleh, harga_jual: item.status === 'Sold' ? item.harga_jual : parseInt(editJual.value) };
-    const { error } = await supabase.from('stock_items').update(updatedItem).eq('id', currentEditId);
-    if (error) { showToast('Error: ' + error.message); return; }
-    showToast('Perubahan disimpan');
-    modalEdit.classList.remove('active'); currentEditId = null;
-    loadItems();
-  });
-
-  batalEdit.addEventListener('click', () => { modalEdit.classList.remove('active'); currentEditId = null; });
-
-  searchInput.addEventListener('input', renderTable);
-  filterBrand.addEventListener('input', renderTable);
-  filterStatus.addEventListener('change', renderTable);
-  resetFilter.addEventListener('click', () => { searchInput.value = ''; filterBrand.value = ''; filterStatus.value = ''; renderTable(); });
-  btnTambah.addEventListener('click', addItem);
-  window.addEventListener('click', e => { if (e.target === modalEdit) modalEdit.classList.remove('active'); });
-
-  const fileInput = document.getElementById('fileExcel');
-  const btnUpload = document.getElementById('btnUpload');
-  btnUpload.addEventListener('click', async () => {
-    const file = fileInput.files[0];
-    if (!file) { alert('Pilih file Excel dulu!'); return; }
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      try {
-        const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, { type: 'array' });
-        const sheet = workbook.Sheets[workbook.SheetNames[0]];
-        const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-        if (rows.length < 2) { alert('File kosong'); return; }
-        const headers = rows[0].map(h => String(h).toLowerCase().trim());
-        const required = ['brand','model','warna','toko','imei','ram','storage','harga_modal','harga_jual','tanggal_masuk'];
-        const missing = required.filter(f => !headers.includes(f));
-        if (missing.length) { alert('Kolom kurang: ' + missing.join(', ')); return; }
-
-        const itemsToInsert = []; let skipped = 0;
-        for (let i = 1; i < rows.length; i++) {
-          const row = rows[i];
-          if (!row || row.every(cell => cell === undefined || cell === null || String(cell).trim() === '')) continue;
-          const obj = {};
-          headers.forEach((h, idx) => obj[h] = row[idx] !== undefined ? row[idx] : '');
-          if (!obj.imei || !obj.brand || !obj.model) { skipped++; continue; }
-          try {
-            itemsToInsert.push({ id: Date.now() + i, brand: String(obj.brand).trim(), model: String(obj.model).trim(), warna: String(obj.warna || '').trim(), toko: String(obj.toko || '').trim(), imei: String(obj.imei).trim(), ram: parseInt(obj.ram) || 0, storage: parseInt(obj.storage) || 0, harga_modal: parseInt(obj.harga_modal) || 0, harga_jual: parseInt(obj.harga_jual) || 0, tanggal_masuk: excelDateToISO(obj.tanggal_masuk), status: 'In Stock', tanggal_keluar: null, actual_harga_jual: null, terjual_oleh: null });
-          } catch (err) { skipped++; }
-        }
-        if (!itemsToInsert.length) { alert('Tidak ada data valid. Dilewati: ' + skipped); return; }
-        const { error } = await supabase.from('stock_items').insert(itemsToInsert);
-        if (error) alert('Gagal: ' + error.message);
-        else { alert('Berhasil: ' + itemsToInsert.length + ' barang.' + (skipped ? ' Dilewati: ' + skipped : '')); fileInput.value = ''; loadItems(); }
-      } catch (err) { alert('Error: ' + err.message); }
-    };
-    reader.readAsArrayBuffer(file);
-  });
-
-  tanggalMasukInput.value = new Date().toISOString().split('T')[0];
-  loadItems();
-})();
+/* Baris detail varian */
+.detail-row {
+  transition: all 0.3s ease;
+}
+.detail-row td {
+  padding: 10px 12px;
+  color: #334155;
+  font-size: 0.85rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+.detail-row:nth-child(even) td {
+  background: #fcfcfd;
+}
+.detail-row:nth-child(odd) td {
+  background: #ffffff;
+}
+.detail-row:hover td {
+  background: #f0f4ff;
+}
